@@ -5,12 +5,30 @@ This is a WIP attempt to package the Cloud Foundry Deep Dive workshop that I del
 
 == Workshop Flow
 
-TODO
+The workshop was originally delivered on the last day of the UberConf show. That day is broken into four 90-minute sessions, with two 15-minute coffee breaks and a lunch break of 1 hour 15 minutes. The sessions are as follows:
+
+. The Developer Experience
+. Architecture and Operations
+. Enabling Continuous Delivery
+. Custom Buildpacks and Data Services
 
 == Contents
 
-TODO
+So far this consists of the slides (in Keynote format) and this README. It also references the following additional GitHub repositories (most of which are housed under the cf-platform-eng organization, but there are a few exceptions):
+
+* https://github.com/cloudfoundry-samples/spring-music[Spring Music Sample Application]
+* https://github.com/cf-platform-eng/cf-scale-boot[CF Scale Boot Sample Application]
+* https://github.com/cf-platform-eng/bosh-lite-installer[BOSH Lite Environment Validator and Installer Scripts]
+* https://github.com/cf-platform-eng/cf-workshop-cd-module[Continuous Delivery Hands-On Lab]
+* https://github.com/mstine/citytest[Current Sample App for CD Lab]
+* https://github.com/cf-platform-eng/cf-workshop-bp-module[Buildpacks Hands-On Lab]
+* https://github.com/cf-platform-eng/cf-workshop-sb-module[Service Brokers Hands-On Lab]
+* https://github.com/mstine/haash-broker[haash-broker: Sample Service Broker App]
+* https://github.com/mstine/haash-client[haash-client: Sample Client for haash-broker]
+
 
 == TODO's
 
 * Ensure that no special fonts appear in Keynote decks. If they do, vectorize into images.
+* Determine license for the content. I would like to use http://creativecommons.org/licenses/by-sa/4.0/[CC BY-SA 4.0], but some of the slides in the decks are derivatives of slides from decks carrying the Pivotal copyright.
+* Find a more ``proper'' example app repo to use for the continuous delivery lab. Probably https://github.com/cf-platform-eng/spring-boot-cities[this], but will require a couple of small modifications.
