@@ -7,7 +7,20 @@ This is a WIP attempt to package the Cloud Foundry Deep Dive workshop that I del
 
 The workshop was originally delivered on the last day of the UberConf show. That day is broken into four 90-minute sessions, with two 15-minute coffee breaks and a lunch break of 1 hour 15 minutes. The sessions are as follows:
 
-. The Developer Experience
+. *The Developer Experience*
++
+This workshop introduces the business ``why'' of Cloud Foundry with a nod to Microservices architectures.
+It then takes the developer through a hands-on ``day in the life'' experience of interacting with Pivotal Web Services:
++
+Target My Cloud Foundry Provider:: walkthrough of PWS registration, download CF CLI, target/login.
+Push My App:: push the Spring Music application, high-level talk through of app push/stage/deploy.
+Bind My App to Backing Services:: bind Spring Music to an ElephantSQL PostgreSQL database, high-level talk through of service creation/binding, explain +VCAP_SERVICES+, point to Spring Cloud.
+Scale My App:: push cf-scale-boot application, scale up, scale down, high-level talk through of dynamic routing.
+Monitor My App’s Logs:: tail cf-scale-boot logs, high-level discussion of loggregator.
+Monitor My App’s Health:: hit the ``kill switch'' in cf-scale-boot, watch the events in the logs, show +cf events+, watch the app restart, high-level talk through of health manager.
+* Monitor My App’s Performance:: bind to New Relic service, re-push application, high-level discussion of NR agent fetching via BP, poke around in NR interface.
+
+
 . Architecture and Operations
 . Enabling Continuous Delivery
 . Custom Buildpacks and Data Services
@@ -38,3 +51,6 @@ It also references the following additional GitHub repositories (most of which a
 * Ensure that no special fonts appear in Keynote decks. If they do, vectorize into images.
 * Determine license for the content. I would like to use http://creativecommons.org/licenses/by-sa/4.0/[CC BY-SA 4.0], but some of the slides in the decks are derivatives of slides from decks carrying the Pivotal copyright.
 * Find a more ``proper'' example app repo to use for the continuous delivery lab. Probably https://github.com/cf-platform-eng/spring-boot-cities[this], but will require a couple of small modifications.
+* Remove ``UberConf'' specific references throughout content.
+* Put some tests (e.g. https://code.google.com/p/rest-assured) in place for haash-broker.
+* Add a ``smoke test'' and ``promotion'' step to the continuous delivery lab.
