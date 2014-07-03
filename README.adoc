@@ -1,0 +1,16 @@
+= CF Community Workshop Kit
+Matt Stine <mstine@gopivotal.com>
+
+This is a WIP attempt to package the Cloud Foundry Deep Dive workshop that I delivered at UberConf 2014 into a reusable form for local CF community events hosted by CF Platform Engineers and other Pivotal staff.
+
+== Workshop Flow
+
+TODO
+
+== Contents
+
+TODO
+
+== TODO's
+
+* Ensure that no special fonts appear in Keynote decks. If they do, vectorize into images.
