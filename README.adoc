@@ -18,12 +18,29 @@ Bind My App to Backing Services:: bind Spring Music to an ElephantSQL PostgreSQL
 Scale My App:: push cf-scale-boot application, scale up, scale down, high-level talk through of dynamic routing.
 Monitor My App’s Logs:: tail cf-scale-boot logs, high-level discussion of loggregator.
 Monitor My App’s Health:: hit the ``kill switch'' in cf-scale-boot, watch the events in the logs, show +cf events+, watch the app restart, high-level talk through of health manager.
-* Monitor My App’s Performance:: bind to New Relic service, re-push application, high-level discussion of NR agent fetching via BP, poke around in NR interface.
+Monitor My App’s Performance:: bind to New Relic service, re-push application, high-level discussion of NR agent fetching via BP, poke around in NR interface.
 
+. *Architecture and Operations*
++
+The primary goals of this session are to:
++
+* Get bosh-lite deployed for the student. This makes ``deploying your own CF'' real for them, and also gives them an admin environment for later labs.
+* While BOSH and CF are deploying, do a deep dive into the CF architecture via animated slides illustrating push, stage, deploy, scale, and health management.
+* Also do a brief dive into BOSH, including why BOSH, what it is, and animations of how it works.
+It's not an operations focused workshop, so we keep the treatment light.
+* Quickly prove that I can push an app to my own CF in the same exact way I can push an app to PWS.
 
-. Architecture and Operations
-. Enabling Continuous Delivery
+. *Enabling Continuous Delivery*
++
+The primary goals of this session are to:
++
+* Give a brief, platform-agnostic overview of the ``why'' and ``what'' of Continuous Delivery.
+The purpose is to simply educate the student and bring everyone to the same level.
+* TODO
+
 . Custom Buildpacks and Data Services
++
+* TODO
 
 == Contents
 
