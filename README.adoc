@@ -14,7 +14,13 @@ The workshop was originally delivered on the last day of the UberConf show. That
 
 == Contents
 
-So far this consists of the slides (in Keynote format) and this README. It also references the following additional GitHub repositories (most of which are housed under the cf-platform-eng organization, but there are a few exceptions):
+So far this consists of:
+
+* this README
+* a link:prerequisites.adoc[prerequisites] doc
+* the link:slides[slides] (in Keynote format)
+
+It also references the following additional GitHub repositories (most of which are housed under the cf-platform-eng organization, but there are a few exceptions):
 
 * https://github.com/cloudfoundry-samples/spring-music[Spring Music Sample Application]
 * https://github.com/cf-platform-eng/cf-scale-boot[CF Scale Boot Sample Application]

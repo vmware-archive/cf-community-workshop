@@ -1,0 +1,43 @@
+= Workshop Prerequisites
+
+== All Sections
+
+- http://git-scm.com/downloads[Git] ("brew install git")
+- A https://github.com[GitHub] account
+- Your favorite Java editor (Eclipse, IntelliJ IDEA, Netbeans)
+- https://github.com/cloudfoundry/cli/releases[The Cloud Foundry CLI] - download the latest!
+
+Needless to say you'll need a laptop! For best experience, a Mac or Linux environment is ideal (it's technically possible to get most of this working on Windows, but it's VERY DIFFICULT).
+Also, you'll need at least 8 GB of RAM to support running Cloud Foundry locally without too much of a performance hit.
+
+== Part 1: The Developer Experience
+
+Part one of the workshop will require a free account on Pivotal Web Services.
+You can create a 60-day trial with no credit card at https://run.pivotal.io.
+
+== Parts 2 & 4: Architecture and Operations/Custom Buildpacks and Data Services
+
+Parts two and four will require the use of BOSH Lite.
+More instructions will be provided at the conference.
+But, to ease setup, please install the following dependencies (in addition to those for part one!):
+
+- https://www.virtualbox.org/wiki/Downloads[Virtualbox]
+- http://www.vagrantup.com/downloads.html[Vagrant]
+- Ruby 1.9.3 (https://github.com/sstephenson/rbenv[rbenv] or http://rvm.io[RVM] are great options!)
+- The BOSH CLI Ruby Gem (after installing Ruby via one of the version managers, "gem install bosh_cli" will do the trick)
+- https://github.com/cloudfoundry-incubator/spiff/releases[Spiff]
+
+An *awesome* alternative to setting up BOSH Lite if you have trouble with the environment (or you are stuck on Windows!) is to use https://trycf.starkandwayne.com[TryCF].
+This only requires an AWS account (obviously a credit card required) and an email address, and eliminates the need for this entire dependency list.
+The estimated cost is 28 cents per hour, so you won't run up a huge bill!
+
+== Part 3: Enabling Continuous Delivery
+
+Part Three will require the use of a FREE Cloudbees account.
+Create one at https://grandcentral.cloudbees.com.
+Once you're set up, click on "Get Started with Builds" to provision your Jenkins instance.
+We'll complete the remainder of the setup during the lab, but it's important to get the Jenkins instance provisioned in advance so that you don't lose 10 minutes of workshop time!
+
+It will also require the use of a FREE TRIAL account of Artifactory Online from JFrog.
+You can obtain an account at https://www.jfrog.com/registration/registration.html].
+This one is a bit quicker, but you still should try to create it before the workshop.
