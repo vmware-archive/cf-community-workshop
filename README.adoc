@@ -36,11 +36,25 @@ The primary goals of this session are to:
 +
 * Give a brief, platform-agnostic overview of the ``why'' and ``what'' of Continuous Delivery.
 The purpose is to simply educate the student and bring everyone to the same level.
-* TODO
+* Explain how Cloud Foundry benefits Continuous Delivery.
+* Provide a hands-on lab experience where the student takes a Spring Boot microservice application and builds a continuous delivery pipeline for it using Jenkins, Artifactory, and Cloud Foundry. This is all done using free trial SaaS versions of the software.
 
-. Custom Buildpacks and Data Services
+. *Custom Buildpacks and Data Services*
 +
-* TODO
+The primary goals of this session are to:
++
+* Give an overview of the extension points available to Cloud Foundry users.
+* Provide a buildpack overview with a deep focus on the Java buildpack (my target audience has been Java conferences)
+* Provide an overview of service options, from user-provided to managed services, including an overview of the V2 Service Broker API.
+* Provide two hands-on lab experiences:
+** _Java Buildpack Extension_
+*** via customization (add a new framework component)
+*** via configuration (upgrade to Java 8)
+** _Service Broker Development/Management_
+*** deploy a service broker for ``HashMap as a Service (HaaSh).'' Register the broker, make the plan public.
+*** create an instance of the HaaSh service
+*** deploy a client app, bind to the service, and test it
+
 
 == Contents
 
