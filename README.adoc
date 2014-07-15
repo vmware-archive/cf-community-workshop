@@ -5,7 +5,20 @@ This is a WIP attempt to package the Cloud Foundry Deep Dive workshop that I del
 
 == Workshop Flow
 
-The workshop was originally delivered on the last day of the UberConf show. That day is broken into four 90-minute sessions, with two 15-minute coffee breaks and a lunch break of 1 hour 15 minutes. The sessions are as follows:
+The workshop was originally delivered on the last day of the UberConf show. That day is broken into four 90-minute sessions, with two 15-minute coffee breaks and a lunch break of 1 hour 15 minutes.
+
+So a strawman schedule would look like the following:
+
+8:00 - 9:00 AM:: Registration/Breakfast/Coffee
+9:00 - 10:30 AM:: Session #1
+10:30 - 10:45 AM:: Morning Break
+10:45 - 12:15 PM:: Session #2
+12:15 - 1:30 PM:: Lunch
+1:30 - 3:00 PM:: Session #3
+3:00 - 3:15 PM:: Afternoon Break
+3:15 - 4:45 PM:: Session #4
+
+The sessions are as follows:
 
 . *The Developer Experience*
 +
