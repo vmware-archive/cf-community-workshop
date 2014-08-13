@@ -1,7 +1,7 @@
-= CF Community Workshop Kit
-Matt Stine <mstine@gopivotal.com>
+= PCF Roadshow Workshop Kit
+Matt Stine <mstine@pivotal.io>
 
-This is a WIP attempt to package the Cloud Foundry Deep Dive workshop that I delivered at UberConf 2014 into a reusable form for local CF community events hosted by CF Platform Engineers and other Pivotal staff.
+This is a WIP attempt to repackage the Cloud Foundry Deep Dive workshop that I delivered at UberConf 2014 into a reusable form for the Pivotal CF Roadshow (http://www.pivotal.io/cloud-platform-roadshow/).
 
 == Workshop Flow
 
