@@ -7,16 +7,19 @@ This is a WIP attempt to package the Cloud Foundry Deep Dive workshop that I del
 
 The workshop was originally delivered on the last day of the UberConf show. That day is broken into four 90-minute sessions, with two 15-minute coffee breaks and a lunch break of 1 hour 15 minutes.
 
-So a strawman schedule would look like the following:
+The schedule has been altered to fit the PCF Roadshow format, with 75-minute sessions. It also accomodates two keynotes:
 
-8:00 - 9:00 AM:: Registration/Breakfast/Coffee
-9:00 - 10:30 AM:: Session #1
-10:30 - 10:45 AM:: Morning Break
-10:45 - 12:15 PM:: Session #2
-12:15 - 1:30 PM:: Lunch
-1:30 - 3:00 PM:: Session #3
-3:00 - 3:15 PM:: Afternoon Break
-3:15 - 4:45 PM:: Session #4
+8:30 - 9:00 AM:: Registration/Breakfast/Coffee
+9:00 - 10:00 AM:: Morning Keynote
+10:00 - 10:15 AM:: Coffee Break
+10:15 - 11:30 AM:: Session #1
+11:30 - 11:45 AM:: Coffee Break
+11:45 - 1:00 PM:: Session #2
+1:00 - 2:30 PM:: Lunch and Keynote
+2:30 - 2:45 PM:: Coffee Break
+2:45 - 4:00 PM:: Session #3
+4:00 - 4:15 PM:: Coffee Break
+4:15 - 5:30 PM:: Session #4
 
 The sessions are as follows:
 
