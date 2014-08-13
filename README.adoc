@@ -40,11 +40,11 @@ Monitor My App’s Performance:: bind to New Relic service, re-push application,
 +
 The primary goals of this session are to:
 +
-* Get bosh-lite deployed for the student. This makes ``deploying your own CF'' real for them, and also gives them an admin environment for later labs.
-* While BOSH and CF are deploying, do a deep dive into the CF architecture via animated slides illustrating push, stage, deploy, scale, and health management.
+* Do a deep dive into the CF architecture via animated slides illustrating push, stage, deploy, scale, and health management.
 * Also do a brief dive into BOSH, including why BOSH, what it is, and animations of how it works.
 It's not an operations focused workshop, so we keep the treatment light.
-* Quickly prove that I can push an app to my own CF in the same exact way I can push an app to PWS.
+* Discuss the value adds to CF BOSH OSS that Pivotal brings through the Pivotal Ops Manager product and our associated ecosystem of data and mobile services.
+* Quickly prove that I can push an app to a Pivotal CF environment running on vCHS in the same exact way I can push an app to PWS.
 
 . *Enabling Continuous Delivery*
 +
