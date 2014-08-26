@@ -1,0 +1,201 @@
+= CF Workshop Continuous Delivery Lab
+Matt Stine <matt.stine@gmail.com>
+
+== Intro
+
+This lab will guide you through building a BASIC continuous delivery pipeline using Jenkins, Artifactory, and Cloud Foundry.
+
+== Setup Steps
+
+. FORK (using the GitHub UI) and clone the [citytest repo](https://github.com/mstine/citytest):
++
+[source,bash]
+----
+$ git clone https://github.com/<YOUR_GIT_USERNAME>/citytest
+$ cd citytest
+----
+
+. Login to your Jenkins instance at CloudBees.
+
+. Navigate to +Manage Jenkins > Manage Plugins > Available+.
+
+. Install the following plugins:
++
+* Gradle
+* Mask Passwords
+* Extensible Choice Parameter Plugin
+* Artifactory Plugin
+* Parameterized Trigger Plugin
++
+When you do, tell Jenkins to restart after plugin install.
+
+. Login to your Aritfactory Online instance.
+
+. Navigate to +Admin > Security > General+.
+
+. Activate encryption for passwords.
+
+. Next navigate to +Admin > Security > Users+.
+
+. Create a new user named +deployer+ with a password of your choosing.
+
+. Once created, navigate to +Admin > Security > Permissions+.
+
+. +Edit+ the +Anything+ permissions target.
+
+. Select the +Users+ tab, and check all permissions for your new user.
+
+. Logout, and then log back in as your new user.
+
+. Click on the account name in the top right hand corner of the screen.
+
+. Enter your password and click +Unlock+.
+
+. Copy your encrypted password and paste it somewhere safe.
+
+. Next, go back to Jenkins. And navigate to +Manage Jenkins > Configure System+.
+
+. Find Artifactory, and add a new Artifactory server:
++
+URL:: `https://<<your artifactory hostname>>.artifactoryonline.com/<<your artifactory hostname>>` (e.g. +https://mattstine.artifactoryonline.com/mattstine+)
+Username:: the user you created in artifactory
+Password:: the encrypted password you copied a moment ago
+
+. Click +Apply+. Then click +Test Connection+ and ensure things are working.
+
+== Create the Initial Build Job
+
+. Navigate back to Jenkins Home.
+
+. Click +New Job+, give it the name +citytest+ and select ``Build a free-style software project.'' Then click +OK+.
+
+. Under +Source Code Management+, select +Git+, and supply your repository URL (e.g. `https://github.com/<YOUR_GIT_USERNAME>/citytest`).
+
+. Under +Build Triggers+, select +Poll SCM+ and provide the string +* * * * *+.
+
+. Under +Build Environment+, select +Gradle-Artifactory Integration+.
++
+* Select your Artifactory server.
+* Select +libs-releases_local+ as the +Publishing Respoitory+.
+* Ensure the following are checked:
+** Capture and publish build info
+** Allow promotion of non-staged builds
+** Publish artifacts to Artifactory
+** Publish Ivy descriptors
+
+. Under +Build+, add a +Invoke Gradle Script+ build step.
++
+Gradle Version:: gradle-latest
+Build Step Description:: +build environment agnostic artifact+
+Switches:: +-Pbuildversion=$BUILD_NUMBER+
+Tasks:: +clean assemble+
+
+. Save the config and try running the build by clicking ``Build Now''. Ensure that you see the artifact in Artifactory.
+
+== Create the Deploy Job
+
+. Navigate back to Jenkins Home.
+
+. Click +New Job+, give it the name +citytest-deploy+ and select ``Build a free-style software project.'' Then click +OK+.
+
+. Check +This build is parameterized+.
+
+. Click +Add Parameter+ and choose +Extensible Choice+.
++
+Name:: +BUILD_VERSION+
+Description:: +The citytest build to promote.+
+Choice Provider:: +System Groovy Choice Parameter+
+Groovy System Script::
++
+[source,groovy]
+----
+import jenkins.model.*
+import hudson.model.*
+
+def getAllBuildNumbers(Job job) {
+  def buildNumbers = []
+  (job.getBuilds()).each { build ->
+    buildNumbers.add(build.getDisplayName().substring(1))
+  }
+  return buildNumbers
+}
+
+def buildJob = Jenkins.instance.getItemByFullName('citytest');
+return getAllBuildNumbers(buildJob)
+----
+
+. Under +Build Environment+, select +Generic-Artifactory Integration+.
+* Select your Artifactory server.
+* Select +ext-releases_local+ as the +Target Respoitory+.
++
+Resolved Artifacts:: `libs-releases-local:citytest/${BUILD_VERSION}/*=>artifacts`
++
+* Ensure +Capture and Publish Build Info+ is checked.
+
+. Check +Mask Passwords+, then Add:
++
+Name:: +CF_PASSWORD+
+Password:: Your Pivotal Web Services Password
+
+. Under +Build+, add a +Execute Shell+ build step. Replace in the script below +uniquetoken+ with something like your username!
++
+Command::
++
+[source,bash]
+----
+wget http://go-cli.s3-website-us-east-1.amazonaws.com/releases/latest/cf-linux-amd64.tgz
+tar -zxvf cf-linux-amd64.tgz
+./cf --version
+./cf login -a https://api.run.pivotal.io -u <<Your PWS Username>>> -p ${CF_PASSWORD} -o <<Your PWS Org>> -s <<Your PWS Space>>
+
+DEPLOYED_VERSION_CMD=$(CF_COLOR=false ./cf apps | grep 'cities-' | cut -d" " -f1)
+DEPLOYED_VERSION="$DEPLOYED_VERSION_CMD"
+ROUTE_VERSION=$(echo "${BUILD_VERSION}" | cut -d"." -f1-3 | tr '.' '-')
+echo "Deployed Version: $DEPLOYED_VERSION"
+echo "Route Version: $ROUTE_VERSION"
+
+./cf push "cities-$BUILD_VERSION" -i 1 -m 512M -n "cities-$ROUTE_VERSION-uniquetoken" -d cfapps.io -p artifacts/citytest-${BUILD_VERSION}.jar --no-manifest
+./cf map-route "cities-${BUILD_VERSION}" cfapps.io -n cities-uniquetoken
+./cf scale cities-${BUILD_VERSION} -i 2
+if [ ! -z "$DEPLOYED_VERSION" -a "$DEPLOYED_VERSION" != " " -a "$DEPLOYED_VERSION" != "cities-${BUILD_VERSION}" ]; then
+  echo "Performing zero-downtime cutover to $BUILD_VERSION"
+  while read line
+  do
+    if [ ! -z "$line" -a "$line" != " " -a "$line" != "cities-${BUILD_VERSION}" ]; then
+      echo "Scaling down, unmapping and removing $line"
+      ./cf scale "$line" -i 1
+      ./cf unmap-route "$line" cfapps.io -n cities-uniquetoken
+      ./cf delete "$line" -f
+    else
+      echo "Skipping $line"
+    fi
+  done <<< "$DEPLOYED_VERSION"
+fi
+----
+
+. Save the config and try running the build by clicking ``Build With Parameters''. Select the build you created in the previous step from the drop list. You should see the build deploy to Cloud Foundry.
+
+== Create the Trigger
+
+. Return to the +citytest+ project and click +Configure+.
+
+. Under +Post Build Actions+ add a post-build action, selecting +Trigger parameterized build on other projects+.
++
+Projects to build:: +citytest-deploy+
+Predefined parameters:: +BUILD_VERSION=$BUILD_NUMBER+
+
+. Save the config and try running the build by clicking ``Build Now''. You should see both builds executed coupled with a zero-downtime deploy of the app to Cloud Foundry.
+
+== Make a Commit and Watch the Pipeline Run
+
+. In your local clone of the +cities+ project, open +src/main/java/org/example/cities/VersionController.java+ in an editor.
+
+. Change the version number in the string.
+
+. Execute +git commit -am "change version number"+.
+
+. Execute +git push origin master+.
+
+. You should see both builds executed coupled with a zero-downtime deploy of the app to Cloud Foundry!
+
+. Congrats! You've reached the end of the lab.

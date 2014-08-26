@@ -85,7 +85,7 @@ It also references the following additional GitHub repositories (most of which a
 * https://github.com/cloudfoundry-samples/spring-music[Spring Music Sample Application]
 * https://github.com/cf-platform-eng/cf-scale-boot[CF Scale Boot Sample Application]
 * https://github.com/cf-platform-eng/bosh-lite-installer[BOSH Lite Environment Validator and Installer Scripts]
-* https://github.com/cf-platform-eng/cf-workshop-cd-module[Continuous Delivery Hands-On Lab]
+* link::labs/continuous-delivery-lab.adoc[Continuous Delivery Hands-On Lab]
 * https://github.com/mstine/citytest[Current Sample App for CD Lab]
 * https://github.com/cf-platform-eng/cf-workshop-bp-module[Buildpacks Hands-On Lab]
 * https://github.com/cf-platform-eng/cf-workshop-sb-module[Service Brokers Hands-On Lab]
