@@ -87,8 +87,8 @@ It also references the following additional GitHub repositories (most of which a
 * https://github.com/cf-platform-eng/bosh-lite-installer[BOSH Lite Environment Validator and Installer Scripts]
 * link:labs/continuous-delivery-lab.adoc[Continuous Delivery Hands-On Lab]
 * https://github.com/mstine/citytest[Current Sample App for CD Lab]
-* https://github.com/cf-platform-eng/cf-workshop-bp-module[Buildpacks Hands-On Lab]
-* https://github.com/cf-platform-eng/cf-workshop-sb-module[Service Brokers Hands-On Lab]
+* link:buildpack-lab.adoc[Buildpacks Hands-On Lab]
+* link:service-broker-lab.adoc[Service Brokers Hands-On Lab]
 * https://github.com/mstine/haash-broker[haash-broker: Sample Service Broker App]
 * https://github.com/mstine/haash-client[haash-client: Sample Client for haash-broker]
 
