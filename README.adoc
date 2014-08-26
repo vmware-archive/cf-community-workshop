@@ -1,13 +1,13 @@
-= PCF Roadshow Workshop Kit
+= Pivotal Cloud Platform Roadshow Workshop Kit
 Matt Stine <mstine@pivotal.io>
 
-This is a WIP attempt to repackage the Cloud Foundry Deep Dive workshop that I delivered at UberConf 2014 into a reusable form for the Pivotal CF Roadshow (http://www.pivotal.io/cloud-platform-roadshow/).
+Workshop kit containing content for the Pivotal Cloud Platform Roadshow (http://www.pivotal.io/cloud-platform-roadshow/).
 
 == Workshop Flow
 
 The workshop was originally delivered on the last day of the UberConf show. That day is broken into four 90-minute sessions, with two 15-minute coffee breaks and a lunch break of 1 hour 15 minutes.
 
-The schedule has been altered to fit the PCF Roadshow format, with 75-minute sessions. It also accomodates two keynotes:
+The schedule has been altered to fit the PCP Roadshow format, with 75-minute sessions. It also accomodates two keynotes:
 
 8:30 - 9:00 AM:: Registration/Breakfast/Coffee
 9:00 - 10:00 AM:: Morning Keynote
@@ -71,7 +71,6 @@ The primary goals of this session are to:
 *** create an instance of the HaaSh service
 *** deploy a client app, bind to the service, and test it
 
-
 == Contents
 
 So far this consists of:
@@ -79,25 +78,22 @@ So far this consists of:
 * this README
 * a link:prerequisites.adoc[prerequisites] doc
 * the link:slides[slides] (in Keynote format)
+* the link:labs[labs]
+** link:labs/continuous-delivery-lab.adoc[Continuous Delivery Hands-On Lab]
+** link:buildpack-lab.adoc[Buildpacks Hands-On Lab]
+** link:service-broker-lab.adoc[Service Brokers Hands-On Lab]
 
-It also references the following additional GitHub repositories (most of which are housed under the cf-platform-eng organization, but there are a few exceptions):
+It also references the following additional sample app GitHub repositories (most of which are housed under the cf-platform-eng organization, but there are a few exceptions):
 
 * https://github.com/cloudfoundry-samples/spring-music[Spring Music Sample Application]
 * https://github.com/cf-platform-eng/cf-scale-boot[CF Scale Boot Sample Application]
-* https://github.com/cf-platform-eng/bosh-lite-installer[BOSH Lite Environment Validator and Installer Scripts]
-* link:labs/continuous-delivery-lab.adoc[Continuous Delivery Hands-On Lab]
 * https://github.com/mstine/citytest[Current Sample App for CD Lab]
-* link:buildpack-lab.adoc[Buildpacks Hands-On Lab]
-* link:service-broker-lab.adoc[Service Brokers Hands-On Lab]
 * https://github.com/mstine/haash-broker[haash-broker: Sample Service Broker App]
 * https://github.com/mstine/haash-client[haash-client: Sample Client for haash-broker]
-
 
 == TODO's
 
 * Ensure that no special fonts appear in Keynote decks. If they do, vectorize into images.
 * Determine license for the content. I would like to use http://creativecommons.org/licenses/by-sa/4.0/[CC BY-SA 4.0], but some of the slides in the decks are derivatives of slides from decks carrying the Pivotal copyright.
 * Find a more ``proper'' example app repo to use for the continuous delivery lab. Probably https://github.com/cf-platform-eng/spring-boot-cities[this], but will require a couple of small modifications.
-* Remove ``UberConf'' specific references throughout content.
-* Put some tests (e.g. https://code.google.com/p/rest-assured) in place for haash-broker.
 * Add a ``smoke test'' and ``promotion'' step to the continuous delivery lab.
