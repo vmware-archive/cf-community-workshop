@@ -86,10 +86,12 @@ So far this consists of:
 It also references the following additional sample app GitHub repositories (most of which are housed under the cf-platform-eng organization, but there are a few exceptions):
 
 * https://github.com/cloudfoundry-samples/spring-music[Spring Music Sample Application]
+* https://github.com/Pivotal-Field-Engineering/PCF-demo[Heat Map Sample Application]
 * https://github.com/cf-platform-eng/cf-scale-boot[CF Scale Boot Sample Application]
 * https://github.com/mstine/citytest[Current Sample App for CD Lab]
 * https://github.com/mstine/haash-broker[haash-broker: Sample Service Broker App]
 * https://github.com/mstine/haash-client[haash-client: Sample Client for haash-broker]
+
 
 == TODO's
 
