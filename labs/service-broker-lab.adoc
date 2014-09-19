@@ -31,76 +31,25 @@ $ cd haash-broker
 $ ./gradlew assemble
 ----
 
-. Ensure that you have targeted your bosh-lite Cloud Foundry deployment, and push the app:
+. Ensure that you have targeted your bosh-lite Cloud Foundry deployment, and push the app (substitute something like your name for +<uniquetoken>+):
 +
 [source,bash]
 ----
-$ cf push -m 512m -p build/libs/haash-broker-0.0.1-SNAPSHOT.jar haash-broker
+$ cf push -m 512m -p build/libs/haash-broker-0.0.1-SNAPSHOT.jar haash-broker-<uniquetoken>
 ----
 
 . Once the app is running, register the broker with the Cloud Controller (substitute the route for your broker app):
 +
 [source,bash]
 ----
-$ cf create-service-broker haash-broker warreng natedogg http://haash-broker.54.235.203.95.xip.io
+$ cf create-service-broker haash-broker warreng natedogg http://haash-broker-<uniquetoken>.s#.pcf.pivotal.io
 ----
 
-. Next, we need to make the service plan public, as all plans start private by default. This step is a little more manual than the others. First, you need to gain access to the Service Plan GUID:
+. Next, we need to make the service plan public, as all plans start private by default.
 +
-[source, bash]
+[source,bash]
 ----
-$ cf curl /v2/service_plans -X 'GET'
-{
-  "total_results": 1,
-  "total_pages": 1,
-  "prev_url": null,
-  "next_url": null,
-  "resources": [
-    {
-      "metadata": {
-        "guid": "ec1da994-eba0-4f50-9453-e00b155a938b",
-        "url": "/v2/service_plans/ec1da994-eba0-4f50-9453-e00b155a938b",
-        "created_at": "2014-06-26T19:59:02+00:00",
-        "updated_at": "2014-06-26T20:00:50+00:00"
-      },
-      "entity": {
-        "name": "basic",
-        "free": true,
-        "description": "Basic Plan",
-        "service_guid": "d458ac57-993a-40cf-925c-d56934a0e494",
-        "extra": null,
-        "unique_id": "1",
-        "public": false,
-        "service_url": "/v2/services/d458ac57-993a-40cf-925c-d56934a0e494",
-        "service_instances_url": "/v2/service_plans/ec1da994-eba0-4f50-9453-e00b155a938b/service_instances"      }    }
-  ]
-}
-----
-+
-You find the Plan GUID at +resources.metadata.guid+. Next you'll send a request to update it:
-+
-[source, bash]
-----
-$ $ cf curl /v2/service_plans/ec1da994-eba0-4f50-9453-e00b155a938b -X 'PUT' -d '{"public":true}'
-{
-  "metadata": {
-    "guid": "ec1da994-eba0-4f50-9453-e00b155a938b",
-    "url": "/v2/service_plans/ec1da994-eba0-4f50-9453-e00b155a938b",
-    "created_at": "2014-06-26T19:59:02+00:00",
-    "updated_at": "2014-06-27T13:21:50+00:00"
-  },
-  "entity": {
-    "name": "basic",
-    "free": true,
-    "description": "Basic Plan",
-    "service_guid": "d458ac57-993a-40cf-925c-d56934a0e494",
-    "extra": null,
-    "unique_id": "1",
-    "public": true,
-    "service_url": "/v2/services/d458ac57-993a-40cf-925c-d56934a0e494",
-    "service_instances_url": "/v2/service_plans/ec1da994-eba0-4f50-9453-e00b155a938b/service_instances"
-  }
-}
+$ cf enable-service-access haash
 ----
 
 . You should now be able to see your service in the marketplace:
@@ -153,17 +102,17 @@ This allows a simpler push experience:
 +
 [source,bash]
 ----
-$ cf push
+$ cf push -n haash-client-<uniquetoken>
 ----
 
 . Once the application is running, you can test it:
 +
 [source,bash]
 ----
-$ curl haash-client.54.235.203.95.xip.io/HaaSh/foo -d '{"value":"bar"}' -X PUT
+$ curl haash-client-<uniquetoken>.s#.pcf.pivotal.io/HaaSh/foo -d '{"value":"bar"}' -X PUT
 {}
 
-$ curl haash-client.54.235.203.95.xip.io/HaaSh/foo -X GET
+$ curl haash-client-<uniquetoken>.s#.pcf.pivotal.io/HaaSh/foo
 {"value":"bar"}
 ----
 
