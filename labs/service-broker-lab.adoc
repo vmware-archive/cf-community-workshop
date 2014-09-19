@@ -24,6 +24,14 @@ $ git clone https://github.com/mstine/haash-broker.git
 $ cd haash-broker
 ----
 
+. Edit the file +src/main/resources/import.sql+, find +<uniquetoken>+ and substitute something like your name (do this same substitution everywhere you see +<uniquetoken>+ throughout the instructions):
++
+[source,sql]
+----
+insert into services (id, name, description, bindable) values ('1', 'HaaSh-<uniquetoken>', 'HaaSh - HashMap as a Service', true)
+insert into plans (id, name, description, service_id) values ('1', 'basic', 'Basic Plan','1');
+----
+
 . Build the project using Gradle Wrapper:
 +
 [source,bash]
@@ -31,7 +39,7 @@ $ cd haash-broker
 $ ./gradlew assemble
 ----
 
-. Ensure that you have targeted your bosh-lite Cloud Foundry deployment, and push the app (substitute something like your name for +<uniquetoken>+):
+. Ensure that you have targeted your bosh-lite Cloud Foundry deployment, and push the app:
 +
 [source,bash]
 ----
@@ -42,7 +50,7 @@ $ cf push -m 512m -p build/libs/haash-broker-0.0.1-SNAPSHOT.jar haash-broker-<un
 +
 [source,bash]
 ----
-$ cf create-service-broker haash-broker warreng natedogg http://haash-broker-<uniquetoken>.s#.pcf.pivotal.io
+$ cf create-service-broker haash-broker-<uniquetoken> warreng natedogg http://haash-broker-<uniquetoken>.s#.pcf.pivotal.io
 ----
 
 . Next, we need to make the service plan public, as all plans start private by default.
