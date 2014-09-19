@@ -57,7 +57,7 @@ $ cf create-service-broker haash-broker-<uniquetoken> warreng natedogg http://ha
 +
 [source,bash]
 ----
-$ cf enable-service-access haash
+$ cf enable-service-access haash-<uniquetoken>
 ----
 
 . You should now be able to see your service in the marketplace:
@@ -69,14 +69,14 @@ Getting services from marketplace in org default / space development as admin...
 OK
 
 service   plans   description
-HaaSh     basic   HaaSh - HashMap as a Service
+HaaSh-<uniquetoken>     basic   HaaSh - HashMap as a Service
 ----
 
 . Next, create an instance of your service:
 +
 [source, bash]
 ----
-$ cf create-service HaaSh basic my-hash
+$ cf create-service HaaSh-<uniquetoken> basic my-hash
 ----
 
 . Now it's time to push and bind to the client app. First clone the haash-client repo:
