@@ -91,11 +91,3 @@ It also references the following additional sample app GitHub repositories (most
 * https://github.com/mstine/citytest[Current Sample App for CD Lab]
 * https://github.com/mstine/haash-broker[haash-broker: Sample Service Broker App]
 * https://github.com/mstine/haash-client[haash-client: Sample Client for haash-broker]
-
-
-== TODO's
-
-* Ensure that no special fonts appear in Keynote decks. If they do, vectorize into images.
-* Determine license for the content. I would like to use http://creativecommons.org/licenses/by-sa/4.0/[CC BY-SA 4.0], but some of the slides in the decks are derivatives of slides from decks carrying the Pivotal copyright.
-* Find a more ``proper'' example app repo to use for the continuous delivery lab. Probably https://github.com/cf-platform-eng/spring-boot-cities[this], but will require a couple of small modifications.
-* Add a ``smoke test'' and ``promotion'' step to the continuous delivery lab.
