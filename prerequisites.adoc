@@ -13,14 +13,3 @@ Needless to say you'll need a laptop! For best experience, a Mac or Linux enviro
 
 The morning session of the workshop will require a free account on Pivotal Web Services.
 You can create a 60-day trial with no credit card at https://run.pivotal.io.
-
-== Afternoon Session
-
-The afternoon session of the workshop will require the use of a FREE Cloudbees account.
-Create one at https://grandcentral.cloudbees.com.
-Once you're set up, click on "Get Started with Builds" to provision your Jenkins instance.
-We'll complete the remainder of the setup during the lab, but it's important to get the Jenkins instance provisioned in advance so that you don't lose 10 minutes of workshop time!
-
-It will also require the use of a FREE TRIAL account of Artifactory Online from JFrog.
-You can obtain an account at https://www.jfrog.com/registration/registration.html].
-This one is a bit quicker, but you still should try to create it before the workshop.

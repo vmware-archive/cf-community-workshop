@@ -10,16 +10,16 @@ The workshop was originally delivered on the last day of the UberConf show. That
 The schedule has been altered to fit the PCP Roadshow format, with 75-minute sessions. It also accomodates two keynotes:
 
 8:30 - 9:00 AM:: Registration/Breakfast/Coffee
-9:00 - 10:00 AM:: Morning Keynote
+9:00 - 10:00 AM:: Morning Keynote (3rd Platform)
 10:00 - 10:15 AM:: Coffee Break
 10:15 - 11:30 AM:: Session #1 - The Developer Experience
 11:30 - 11:45 AM:: Coffee Break
 11:45 - 1:00 PM:: Session #2 - Architecture and Operations
-1:00 - 2:30 PM:: Lunch and Keynote
+1:00 - 2:30 PM:: Lunch and Keynote (Architecting for Continuous Delivery)
 2:30 - 2:45 PM:: Coffee Break
-2:45 - 4:00 PM:: Session #3 - Enabling Continuous Delivery
+2:45 - 4:00 PM:: Session #3 - Custom Buildpacks and Data Services
 4:00 - 4:15 PM:: Coffee Break
-4:15 - 5:30 PM:: Session #4 - Custom Buildpacks and Data Services
+4:15 - 5:30 PM:: Session #4 - Enabling Continuous Delivery
 
 The sessions are as follows:
 
@@ -44,16 +44,7 @@ The primary goals of this session are to:
 * Also do a brief dive into BOSH, including why BOSH, what it is, and animations of how it works.
 It's not an operations focused workshop, so we keep the treatment light.
 * Discuss the value adds to CF BOSH OSS that Pivotal brings through the Pivotal Ops Manager product and our associated ecosystem of data and mobile services.
-* Quickly prove that I can push an app to a Pivotal CF environment running on vCHS in the same exact way I can push an app to PWS.
-
-. *Enabling Continuous Delivery*
-+
-The primary goals of this session are to:
-+
-* Give a brief, platform-agnostic overview of the ``why'' and ``what'' of Continuous Delivery.
-The purpose is to simply educate the student and bring everyone to the same level.
-* Explain how Cloud Foundry benefits Continuous Delivery.
-* Provide a hands-on lab experience where the student takes a Spring Boot microservice application and builds a continuous delivery pipeline for it using Jenkins, Artifactory, and Cloud Foundry. This is all done using free trial SaaS versions of the software.
+* Brief demo of Operations Manager environment (presenter's discretion)
 
 . *Custom Buildpacks and Data Services*
 +
@@ -62,14 +53,23 @@ The primary goals of this session are to:
 * Give an overview of the extension points available to Cloud Foundry users.
 * Provide a buildpack overview with a deep focus on the Java buildpack (my target audience has been Java conferences)
 * Provide an overview of service options, from user-provided to managed services, including an overview of the V2 Service Broker API.
-* Provide two hands-on lab experiences:
-** _Java Buildpack Extension_
-*** via customization (add a new framework component)
-*** via configuration (upgrade to Java 8)
-** _Service Broker Development/Management_
+* Provide a live demo of either:
+** _Service Broker Development/Management_ (*_PREFERABLE_*)
 *** deploy a service broker for ``HashMap as a Service (HaaSh).'' Register the broker, make the plan public.
 *** create an instance of the HaaSh service
 *** deploy a client app, bind to the service, and test it
+** _Java Buildpack Extension_
+*** via customization (add a new framework component)
+*** via configuration (upgrade to Java 8)
+
+. *Enabling Continuous Delivery*
++
+The primary goals of this session are to:
++
+* Give a brief, platform-agnostic overview of the ``why'' and ``what'' of Continuous Delivery.
+The purpose is to simply educate the student and bring everyone to the same level.
+* Explain how Cloud Foundry benefits Continuous Delivery.
+* Provide a live demo where the presenter takes a Spring Boot microservice application and builds a continuous delivery pipeline for it using Jenkins, Artifactory, and Cloud Foundry. This is done using a PCF environment and SaaS versions of Jenkins and Artifactory.
 
 == Contents
 
@@ -78,10 +78,10 @@ So far this consists of:
 * this README
 * a link:prerequisites.adoc[prerequisites] doc
 * the link:slides[slides] (in Keynote format)
-* the link:labs[labs]
-** link:labs/continuous-delivery-lab.adoc[Continuous Delivery Hands-On Lab]
-** link:buildpack-lab.adoc[Buildpacks Hands-On Lab]
-** link:service-broker-lab.adoc[Service Brokers Hands-On Lab]
+* the link:demos[demos]
+** link:labs/continuous-delivery-lab.adoc[Continuous Delivery Demo]
+** link:labs/buildpack-lab.adoc[Buildpacks Demo]
+** link:labs/service-broker-lab.adoc[Service Brokers Demo]
 
 It also references the following additional sample app GitHub repositories (most of which are housed under the cf-platform-eng organization, but there are a few exceptions):
 
