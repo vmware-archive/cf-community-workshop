@@ -79,9 +79,9 @@ So far this consists of:
 * a link:prerequisites.adoc[prerequisites] doc
 * the link:slides[slides] (in Keynote format)
 * the link:demos[demos]
-** link:labs/continuous-delivery-lab.adoc[Continuous Delivery Demo]
-** link:labs/buildpack-lab.adoc[Buildpacks Demo]
-** link:labs/service-broker-lab.adoc[Service Brokers Demo]
+** link:demos/continuous-delivery-lab.adoc[Continuous Delivery Demo]
+** link:demos/buildpack-lab.adoc[Buildpacks Demo]
+** link:demos/service-broker-lab.adoc[Service Brokers Demo]
 
 It also references the following additional sample app GitHub repositories (most of which are housed under the cf-platform-eng organization, but there are a few exceptions):
 
