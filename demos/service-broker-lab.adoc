@@ -1,7 +1,9 @@
-= CF Workshop Service Broker Lab
+= CF Workshop Service Broker Demo
 Matt Stine <matt.stine@gmail.com>
 
 == Intro
+
+_These instructions are written assuming you will use one of the Roadshow Sandbox Environments._
 
 This lab will guide you through:
 
@@ -24,14 +26,6 @@ $ git clone https://github.com/mstine/haash-broker.git
 $ cd haash-broker
 ----
 
-. Edit the file +src/main/resources/import.sql+, find +<uniquetoken>+ and substitute something like your name (do this same substitution everywhere you see +<uniquetoken>+ throughout the instructions):
-+
-[source,sql]
-----
-insert into services (id, name, description, bindable) values ('1', 'HaaSh-<uniquetoken>', 'HaaSh - HashMap as a Service', true)
-insert into plans (id, name, description, service_id) values ('1', 'basic', 'Basic Plan','1');
-----
-
 . Build the project using Gradle Wrapper:
 +
 [source,bash]
@@ -43,21 +37,21 @@ $ ./gradlew assemble
 +
 [source,bash]
 ----
-$ cf push -m 512m -p build/libs/haash-broker-0.0.1-SNAPSHOT.jar haash-broker-<uniquetoken>
+$ cf push -m 512m -p build/libs/haash-broker-0.0.1-SNAPSHOT.jar haash-broker
 ----
 
 . Once the app is running, register the broker with the Cloud Controller (substitute the route for your broker app):
 +
 [source,bash]
 ----
-$ cf create-service-broker haash-broker-<uniquetoken> warreng natedogg http://haash-broker-<uniquetoken>.s#.pcf.pivotal.io
+$ cf create-service-broker haash-broker warreng natedogg http://haash-broker.s#.pcf.pivotal.io
 ----
 
 . Next, we need to make the service plan public, as all plans start private by default.
 +
 [source,bash]
 ----
-$ cf enable-service-access haash-<uniquetoken>
+$ cf enable-service-access haash
 ----
 
 . You should now be able to see your service in the marketplace:
@@ -69,14 +63,14 @@ Getting services from marketplace in org default / space development as admin...
 OK
 
 service   plans   description
-HaaSh-<uniquetoken>     basic   HaaSh - HashMap as a Service
+HaaSh     basic   HaaSh - HashMap as a Service
 ----
 
 . Next, create an instance of your service:
 +
 [source, bash]
 ----
-$ cf create-service HaaSh-<uniquetoken> basic my-hash
+$ cf create-service HaaSh basic my-hash
 ----
 
 . Now it's time to push and bind to the client app. First clone the haash-client repo:
@@ -110,17 +104,17 @@ This allows a simpler push experience:
 +
 [source,bash]
 ----
-$ cf push -n haash-client-<uniquetoken>
+$ cf push
 ----
 
 . Once the application is running, you can test it:
 +
 [source,bash]
 ----
-$ curl haash-client-<uniquetoken>.s#.pcf.pivotal.io/HaaSh/foo -d '{"value":"bar"}' -X PUT
+$ curl haash-client.s#.pcf.pivotal.io/HaaSh/foo -d '{"value":"bar"}' -X PUT
 {}
 
-$ curl haash-client-<uniquetoken>.s#.pcf.pivotal.io/HaaSh/foo
+$ curl haash-client.s#.pcf.pivotal.io/HaaSh/foo
 {"value":"bar"}
 ----
 
