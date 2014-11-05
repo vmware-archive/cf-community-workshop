@@ -212,6 +212,7 @@ if [ ! -z "$DEPLOYED_VERSION" -a "$DEPLOYED_VERSION" != " " -a "$DEPLOYED_VERSIO
     fi
   done <<< "$DEPLOYED_VERSION"
 fi
+----
 
 . Save the config and try running the build by clicking ``Build With Parameters''. Select the build you created in the previous step from the drop list. You should see the build deploy to Cloud Foundry.
 
