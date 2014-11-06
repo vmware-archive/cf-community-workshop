@@ -170,6 +170,7 @@ CF_ORG=<<Your PWS Organization>>>
 CF_SPACE=<<Your PWS Space>>>
 CF_DOMAIN=cfapps.io
 CF_API_ENDPOINT=api.run.pivotal.io
+CF_ROUTE_UNIQUE=uniquetoken
 
 if [[ $platform == 'Mac' ]]; then
   curl -L "https://cli.run.pivotal.io/stable?release=macosx64&source=pws" -o "installer-osx-amd64.pkg"
@@ -195,8 +196,8 @@ ROUTE_VERSION=$(echo "${BUILD_VERSION}" | cut -d"." -f1-3 | tr '.' '-')
 echo "Deployed Version: $DEPLOYED_VERSION"
 echo "Route Version: $ROUTE_VERSION"
 
-./cf push "cities-$BUILD_VERSION" -i 1 -m 512M -n "cities-$ROUTE_VERSION-uniquetoken" -d ${CF_DOMAIN} -p artifacts/citytest-${BUILD_VERSION}.jar --no-manifest
-./cf map-route "cities-${BUILD_VERSION}" ${CF_DOMAIN} -n cities-uniquetoken
+./cf push "cities-$BUILD_VERSION" -i 1 -m 512M -n "cities-$ROUTE_VERSION-$CF_ROUTE_UNIQUE" -d ${CF_DOMAIN} -p artifacts/citytest-${BUILD_VERSION}.jar --no-manifest
+./cf map-route "cities-${BUILD_VERSION}" ${CF_DOMAIN} -n cities-$CF_ROUTE_UNIQUE
 ./cf scale cities-${BUILD_VERSION} -i 2
 if [ ! -z "$DEPLOYED_VERSION" -a "$DEPLOYED_VERSION" != " " -a "$DEPLOYED_VERSION" != "cities-${BUILD_VERSION}" ]; then
   echo "Performing zero-downtime cutover to $BUILD_VERSION"
@@ -205,7 +206,7 @@ if [ ! -z "$DEPLOYED_VERSION" -a "$DEPLOYED_VERSION" != " " -a "$DEPLOYED_VERSIO
     if [ ! -z "$line" -a "$line" != " " -a "$line" != "cities-${BUILD_VERSION}" ]; then
       echo "Scaling down, unmapping and removing $line"
       ./cf scale "$line" -i 1
-      ./cf unmap-route "$line" ${CF_DOMAIN} -n cities-uniquetoken
+      ./cf unmap-route "$line" ${CF_DOMAIN} -n cities-$CF_ROUTE_UNIQUE
       ./cf delete "$line" -f
     else
       echo "Skipping $line"
