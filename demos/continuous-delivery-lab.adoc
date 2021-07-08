@@ -26,6 +26,7 @@ $ cd citytest
 * Extensible Choice Parameter Plugin
 * Artifactory Plugin
 * Parameterized Trigger Plugin
+* Artifact Resolver
 +
 When you do, tell Jenkins to restart after plugin install.
 
@@ -62,6 +63,19 @@ Username:: the user you created in artifactory
 Password:: the encrypted password you copied a moment ago
 
 . Click +Apply+. Then click +Test Connection+ and ensure things are working.
+
+. Next, find the Artifact Resolver section.
+
+. In the Repositories section set the following properties:
++
+Repo Id:: Artifactory
+Repo Type:: default
+Repo Manager:: checked
+Url:: `https://<<your artifactory hostname>>.artifactoryonline.com/<<your artifactory hostname>>` (e.g. +https://mattstine.artifactoryonline.com/mattstine+)
+Username:: the user you created in artifactory
+Password:: the encrypted password you copied a moment ago
+
+. Click +Apply+.
 
 == Create the Initial Build Job
 
@@ -124,18 +138,20 @@ def buildJob = Jenkins.instance.getItemByFullName('citytest');
 return getAllBuildNumbers(buildJob)
 ----
 
-. Under +Build Environment+, select +Generic-Artifactory Integration+.
-* Select your Artifactory server.
-* Select +ext-releases_local+ as the +Target Respoitory+.
-+
-Resolved Artifacts:: `libs-releases-local:citytest/${BUILD_VERSION}/*=>artifacts`
-+
-* Ensure +Capture and Publish Build Info+ is checked.
-
-. Check +Mask Passwords+, then Add:
+. Under +Build Environment+, check +Mask Passwords+, then Add:
 +
 Name:: +CF_PASSWORD+
 Password:: Your Pivotal Web Services Password
+
+. Under +Build+, add an +Artifact Resolver+ build step:
+Fail on error:: checked
+Target directory:: artifacts
+Release update policy:: always
+Snapshot update policy:: always
+Then under Artifacts:
+Artifact Id:: citytest
+Version:: ${BUILD_VERSION}
+Extension:: jar
 
 . Under +Build+, add a +Execute Shell+ build step. Replace in the script below +uniquetoken+ with something like your username!
 +
@@ -143,10 +159,36 @@ Command::
 +
 [source,bash]
 ----
-wget http://go-cli.s3-website-us-east-1.amazonaws.com/releases/latest/cf-linux-amd64.tgz
-tar -zxvf cf-linux-amd64.tgz
+PLATFORM='unknown'
+UNAMESTR=`uname`
+if [[ "$UNAMESTR" == 'Darwin' ]]; then
+  platform='Mac'
+fi
+
+CF_USER=<<Your PWS Username>>>
+CF_ORG=<<Your PWS Organization>>>
+CF_SPACE=<<Your PWS Space>>>
+CF_DOMAIN=cfapps.io
+CF_API_ENDPOINT=api.run.pivotal.io
+CF_ROUTE_UNIQUE=uniquetoken
+
+if [[ $platform == 'Mac' ]]; then
+  curl -L "https://cli.run.pivotal.io/stable?release=macosx64&source=pws" -o "installer-osx-amd64.pkg"
+  mkdir -p cf-pkg
+  cd cf-pkg
+  xar -xf ../installer-osx-amd64.pkg
+  cd com.cloudfoundry.cli.pkg
+  cat Payload | gunzip -dc | cpio -i
+  mv usr/local/bin/cf ../..
+  cd ../..
+else
+  wget http://go-cli.s3-website-us-east-1.amazonaws.com/releases/latest/cf-linux-amd64.tgz
+  tar -zxvf cf-linux-amd64.tgz
+fi
 ./cf --version
-./cf login -a https://api.run.pivotal.io -u <<Your PWS Username>>> -p ${CF_PASSWORD} -o <<Your PWS Org>> -s <<Your PWS Space>>
+./cf login -a https://${CF_API_ENDPOINT} -u ${CF_USER} -p ${CF_PASSWORD} -o ${CF_ORG} -s ${CF_SPACE}
+#Use this version instead of the above if you need to disable SSL validation
+#./cf login -a https://${CF_API_ENDPOINT} -u ${CF_USER} -p ${CF_PASSWORD} -o ${CF_ORG} -s ${CF_SPACE} --skip-ssl-validation
 
 DEPLOYED_VERSION_CMD=$(CF_COLOR=false ./cf apps | grep 'cities-' | cut -d" " -f1)
 DEPLOYED_VERSION="$DEPLOYED_VERSION_CMD"
@@ -154,8 +196,8 @@ ROUTE_VERSION=$(echo "${BUILD_VERSION}" | cut -d"." -f1-3 | tr '.' '-')
 echo "Deployed Version: $DEPLOYED_VERSION"
 echo "Route Version: $ROUTE_VERSION"
 
-./cf push "cities-$BUILD_VERSION" -i 1 -m 512M -n "cities-$ROUTE_VERSION-uniquetoken" -d cfapps.io -p artifacts/citytest-${BUILD_VERSION}.jar --no-manifest
-./cf map-route "cities-${BUILD_VERSION}" cfapps.io -n cities-uniquetoken
+./cf push "cities-$BUILD_VERSION" -i 1 -m 512M -n "cities-$ROUTE_VERSION-$CF_ROUTE_UNIQUE" -d ${CF_DOMAIN} -p artifacts/citytest-${BUILD_VERSION}.jar --no-manifest
+./cf map-route "cities-${BUILD_VERSION}" ${CF_DOMAIN} -n cities-$CF_ROUTE_UNIQUE
 ./cf scale cities-${BUILD_VERSION} -i 2
 if [ ! -z "$DEPLOYED_VERSION" -a "$DEPLOYED_VERSION" != " " -a "$DEPLOYED_VERSION" != "cities-${BUILD_VERSION}" ]; then
   echo "Performing zero-downtime cutover to $BUILD_VERSION"
@@ -164,7 +206,7 @@ if [ ! -z "$DEPLOYED_VERSION" -a "$DEPLOYED_VERSION" != " " -a "$DEPLOYED_VERSIO
     if [ ! -z "$line" -a "$line" != " " -a "$line" != "cities-${BUILD_VERSION}" ]; then
       echo "Scaling down, unmapping and removing $line"
       ./cf scale "$line" -i 1
-      ./cf unmap-route "$line" cfapps.io -n cities-uniquetoken
+      ./cf unmap-route "$line" ${CF_DOMAIN} -n cities-$CF_ROUTE_UNIQUE
       ./cf delete "$line" -f
     else
       echo "Skipping $line"
